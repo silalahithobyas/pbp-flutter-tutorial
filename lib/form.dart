@@ -16,9 +16,28 @@ class _MyFormPageState extends State<MyFormPage> {
   bool jenjangMagister = false;
   bool jenjangDoktor = false;
   double umur = 0;
-  bool _nilaiSwitch = false;
   String kelasPBP = 'A';
   List<String> listKelasPBP = ['A', 'B', 'C', 'D', 'E', 'F', 'KI'];
+  bool _nilaiSwitch = false;
+
+  String _jenjang() {
+    if (jenjangDiploma) {
+      return "Diploma";
+    } else if (jenjangDoktor) {
+      return "Doktor";
+    } else if (jenjangMagister) {
+      return "Magister";
+    } else {
+      return "Sarjana";
+    }
+  }
+
+  String _practiceMode() {
+    if (_nilaiSwitch) {
+      return "On";
+    }
+    return "Off";
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -68,7 +87,7 @@ class _MyFormPageState extends State<MyFormPage> {
                     padding: const EdgeInsets.all(8.0),
                     child: TextFormField(
                       decoration: InputDecoration(
-                        hintText: "Contoh: Pak Dengklek",
+                        hintText: "Contoh: Neytiri",
                         labelText: "Nama Lengkap",
                         // Menambahkan icon agar lebih intuitif
                         icon: const Icon(Icons.people),
@@ -115,6 +134,12 @@ class _MyFormPageState extends State<MyFormPage> {
                           umur = value;
                         });
                       },
+                    ),
+                  ),
+                  ListTile(
+                    leading: const Icon(Icons.class_),
+                    title: const Text(
+                      'Kelas PBP',
                     ),
                     trailing: DropdownButton(
                       value: kelasPBP,
@@ -220,8 +245,10 @@ class _MyFormPageState extends State<MyFormPage> {
                                   children: <Widget>[
                                     Center(child: const Text('Informasi Data')),
                                     SizedBox(height: 20),
-                                    Center(
-                                        child: Text('Judul : ' + _namaLengkap)),
+                                    Text('Jenjang: ' + _jenjang(),textAlign: TextAlign.center),
+                                    Text('Umur: $umur',textAlign: TextAlign.center),
+                                    Text('Kelas: ' + kelasPBP, textAlign: TextAlign.center),
+                                    Text('Practice Mode: ' + _practiceMode(), textAlign: TextAlign.center),
                                     // TODO: Munculkan informasi yang didapat dari form
                                     TextButton(
                                       onPressed: () {
